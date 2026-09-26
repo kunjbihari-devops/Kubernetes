@@ -1,0 +1,29 @@
+name: Deployment RAM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deployment-ram:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Step 1 - Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Step 2 - Build Docker Image
+        run: |
+          docker build -t deployment-ram .
+
+      - name: Step 3 - Run Container
+        run: |
+          docker run -d \
+            --name deployment-ram \
+            -p 3000:3000 \
+            deployment-ram
+
+      - name: Step 4 - Check Container
+        run: |
+          docker ps
